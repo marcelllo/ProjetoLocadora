@@ -7,6 +7,7 @@ package visao;
 
 import entidades.Categoria;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import persistencia.CategoriaDAO;
 
@@ -49,8 +50,10 @@ public class TelaListaCategoria extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabCategorias = new javax.swing.JTable();
+        btnExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         tabCategorias.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -70,25 +73,61 @@ public class TelaListaCategoria extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabCategorias);
 
+        btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 702, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnExcluir)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(60, Short.MAX_VALUE)
+                .addContainerGap(19, Short.MAX_VALUE)
+                .addComponent(btnExcluir)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+        int linha = tabCategorias.getSelectedRow();
+        if (linha > -1) {
+            Categoria categoria = categorias.get(linha);
+            int opcao = JOptionPane
+                .showConfirmDialog(this, 
+                        "Deseja realmente excluir a categoria " + categoria.getNome() + "?", 
+                        "Confirme a exclusão", JOptionPane.YES_NO_OPTION);
+            
+            if (opcao == JOptionPane.YES_OPTION) {
+                if (CategoriaDAO.excluir(categoria.getId())) {
+                    JOptionPane.showMessageDialog(this, "Categoria excluída com sucesso!");
+                    montarListaCategorias();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir a categoria " + categoria.getNome() + ".");
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione uma categoria para excluir!");
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -127,6 +166,7 @@ public class TelaListaCategoria extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnExcluir;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tabCategorias;
     // End of variables declaration//GEN-END:variables
