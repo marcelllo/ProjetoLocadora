@@ -16,11 +16,23 @@ import persistencia.CategoriaDAO;
 public class TelaCadastroCategoria extends javax.swing.JFrame {
 
     private Categoria categoria = new Categoria();
+    private TelaListaCategoria telaListagem;
     /**
      * Creates new form TelaCadastroCategoria
      */
-    public TelaCadastroCategoria() {
+    public TelaCadastroCategoria(TelaListaCategoria telaListagem) {
         initComponents();
+        this.telaListagem = telaListagem;
+    }
+    
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+        txtCategoria.setText(categoria.getNome());
+        if (categoria.getTipo() == 'F') {
+            rdbFilme.setSelected(true);
+        } else if (categoria.getTipo() == 'J') {
+            rdbJogo.setSelected(true);
+        }
     }
 
     /**
@@ -40,7 +52,7 @@ public class TelaCadastroCategoria extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btnGravar = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jLabel1.setText("Categoria");
@@ -108,48 +120,36 @@ public class TelaCadastroCategoria extends javax.swing.JFrame {
         } 
         
         if (categoria.getTipo() != ' ') {
-            if (CategoriaDAO.inserir(categoria)) {
-                JOptionPane.showMessageDialog(this, "Categoria inserida com sucesso!");
-                dispose(); // fechar a tela de cadastro
+            
+            if (categoria.getId() == 0) {
+                inserir();
             } else {
-                JOptionPane.showMessageDialog(this, "Erro ao inserir categoria");
+                alterar();
             }
+            
         } else {
             JOptionPane.showMessageDialog(this, "Selecione o tipo de categoria");
         }
     }//GEN-LAST:event_btnGravarActionPerformed
 
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+    private void inserir() {
+        if (CategoriaDAO.inserir(categoria)) {
+            JOptionPane.showMessageDialog(this, "Categoria inserida com sucesso!");
+            telaListagem.montarListaCategorias();
+            dispose(); // fechar a tela de cadastro
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao inserir categoria");
         }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaCadastroCategoria().setVisible(true);
-            }
-        });
+    }
+    
+    private void alterar() {
+        if (CategoriaDAO.alterar(categoria)) {
+            JOptionPane.showMessageDialog(this, "Categoria alterada com sucesso!");
+            telaListagem.montarListaCategorias();
+            dispose(); // fechar a tela de cadastro
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao alterar categoria");
+        }
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
