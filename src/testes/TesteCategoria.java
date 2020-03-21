@@ -9,6 +9,8 @@ public class TesteCategoria {
         categoria.setNome("Ação");
         categoria.setTipo('F'); // F - Filme J - Jogo
         
-        CategoriaDAO.inserir(categoria);
+        // CategoriaDAO.inserir(categoria);
+        categoria.setId(1);
+        System.out.println(CategoriaDAO.alterar(categoria));
     }
 }
