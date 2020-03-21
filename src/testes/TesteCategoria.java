@@ -12,6 +12,7 @@ public class TesteCategoria {
         // CategoriaDAO.inserir(categoria);
         // categoria.setId(1);
         // System.out.println(CategoriaDAO.alterar(categoria));
-        System.out.println(CategoriaDAO.excluir(1));
+        // System.out.println(CategoriaDAO.excluir(1));
+        System.out.println(CategoriaDAO.listar());
     }
 }
