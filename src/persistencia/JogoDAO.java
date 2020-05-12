@@ -71,4 +71,40 @@ public class JogoDAO {
             return false;
         }
     }
+    
+    public static List<Jogo> listar() {
+        List<Jogo> listaJogos = new ArrayList<Jogo>();
+        try {
+            Connection conexao = Conexao.getConexao();
+            String sql = "select jogo.*, " +
+                        "   categoria.nome as categoria, " +
+                        "   categoria.tipo as tipo_categoria " +
+                        "from jogo " +
+                        "inner join categoria on jogo.categoria_id = categoria.id";
+            Statement st = conexao.createStatement();
+            ResultSet res = st.executeQuery(sql);
+            while(res.next()) {
+                Categoria c = new Categoria();
+                c.setId(res.getInt("categoria_id"));
+                c.setNome(res.getString("categoria"));
+                c.setTipo(res.getString("tipo_categoria").charAt(0));
+                
+                Jogo j = new Jogo(c); // Associa a categoria ao jogo
+                j.setDescricao(res.getString("descricao"));
+                j.setId(res.getInt("id"));
+                j.setMemoria(res.getInt("memoria"));
+                j.setNumeroDias(res.getInt("numeroDias"));
+                j.setPreco(res.getDouble("preco"));
+                j.setTipo(res.getString("tipo"));
+                j.setTitulo(res.getString("titulo"));
+                
+                listaJogos.add(j);
+            }
+            res.close();
+            st.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return listaJogos;
+    }
 }
