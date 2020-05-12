@@ -1,1 +1,15 @@
-/build/
+# NetBeans private configurations #
+build/
+nbproject/private
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+
+# Class files #
+*.Class
+
+# Package Files #
+*.jar
+*.war
+*.ear
