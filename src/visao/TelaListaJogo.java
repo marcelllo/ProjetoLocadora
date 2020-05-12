@@ -51,6 +51,11 @@ public class TelaListaJogo extends javax.swing.JFrame {
         });
 
         btnAlterar.setText("Alterar");
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         btnExcluir.setText("Excluir");
 
@@ -109,6 +114,18 @@ public class TelaListaJogo extends javax.swing.JFrame {
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
         new TelaCadastroJogo(this).setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        int linha = tabJogos.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um jogo para alterar!");
+        } else {
+            TelaCadastroJogo cadastro = new TelaCadastroJogo(this);
+            // Pega o jogo selecionado e envia para a tela de cadastro
+            cadastro.setJogo(listaJogos.get(linha)); 
+            cadastro.setVisible(true);
+        }
+    }//GEN-LAST:event_btnAlterarActionPerformed
 
     public void listarJogos() {
         listaJogos = JogoDAO.listar();

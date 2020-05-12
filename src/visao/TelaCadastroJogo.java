@@ -27,6 +27,17 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         this.jogo = new Jogo(new Categoria());
         this.telaLista = telaLista;
     }
+    
+    public void setJogo(Jogo jogo) {
+        this.jogo = jogo;
+        txtTitulo.setText(jogo.getTitulo());
+        txtDescricao.setText(jogo.getDescricao());
+        txtCategoria.setText(jogo.getCategoria().getNome());
+        txtTipo.setText(jogo.getTipo());
+        txtPreco.setText(String.valueOf(jogo.getPreco()));
+        txtMemoria.setText(String.valueOf(jogo.getMemoria()));
+        txtNumeroDias.setText(String.valueOf(jogo.getNumeroDias()));
+    }
         
     /**
      * This method is called from within the constructor to initialize the form.
@@ -189,7 +200,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         if (JogoDAO.inserir(jogo)) {
             JOptionPane.showMessageDialog(this, "Jogo inserido com sucesso!");
             telaLista.listarJogos(); // Atualizar a lista de jogos
-            dispose(); // Fechar a tela de cadastro            
+            dispose(); // Fechar a tela de cadastro
         } else {
             JOptionPane.showMessageDialog(this, "Erro ao inserir jogo!");
         }
@@ -198,6 +209,8 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
     private void alterar() {
         if (JogoDAO.alterar(jogo)) {
             JOptionPane.showMessageDialog(this, "Jogo alterado com sucesso!");
+            telaLista.listarJogos();
+            dispose();
         } else {
             JOptionPane.showMessageDialog(this, "Erro ao alterar jogo!");
         }
