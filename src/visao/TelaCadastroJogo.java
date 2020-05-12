@@ -17,15 +17,17 @@ import persistencia.JogoDAO;
 public class TelaCadastroJogo extends javax.swing.JFrame {
 
     private Jogo jogo;
+    private TelaListaJogo telaLista;
 
     /**
      * Creates new form TelaCadastroJogo
      */
-    public TelaCadastroJogo() {
+    public TelaCadastroJogo(TelaListaJogo telaLista) {
         initComponents();
         this.jogo = new Jogo(new Categoria());
+        this.telaLista = telaLista;
     }
-    
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -186,6 +188,8 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
     private void inserir() {
         if (JogoDAO.inserir(jogo)) {
             JOptionPane.showMessageDialog(this, "Jogo inserido com sucesso!");
+            telaLista.listarJogos(); // Atualizar a lista de jogos
+            dispose(); // Fechar a tela de cadastro            
         } else {
             JOptionPane.showMessageDialog(this, "Erro ao inserir jogo!");
         }
@@ -197,41 +201,6 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Erro ao alterar jogo!");
         }
-    }
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaListaCategoria.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaCadastroJogo().setVisible(true);
-            }
-        });
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
