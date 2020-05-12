@@ -4,17 +4,26 @@
  * and open the template in the editor.
  */
 package visao;
+
+import entidades.Categoria;
+import entidades.Jogo;
+import javax.swing.JOptionPane;
+import persistencia.JogoDAO;
+
 /**
  *
  * @author Marcelo
  */
 public class TelaCadastroJogo extends javax.swing.JFrame {
 
+    private Jogo jogo;
+
     /**
      * Creates new form TelaCadastroJogo
      */
     public TelaCadastroJogo() {
         initComponents();
+        this.jogo = new Jogo(new Categoria());
     }
     
     /**
@@ -66,6 +75,11 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         jLabel7.setText("Tipo");
 
         btnGravar.setText("Gravar");
+        btnGravar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGravarActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 3, 24)); // NOI18N
         jLabel8.setText("Cadastro de Jogos");
@@ -152,7 +166,38 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnGravarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGravarActionPerformed
+        jogo.setTitulo(txtTitulo.getText());
+        jogo.setDescricao(txtDescricao.getText());
+        jogo.setTipo(txtTipo.getText());
+        jogo.setMemoria(Integer.parseInt(txtMemoria.getText()));
+        jogo.setPreco(Double.parseDouble(txtPreco.getText()));
+        jogo.setNumeroDias(Integer.parseInt(txtNumeroDias.getText()));
+        jogo.getCategoria().setNome(txtCategoria.getText());
+        
+        if (jogo.getId() == 0) {
+            inserir();
+        } else {
+            alterar();
+        }
+    }//GEN-LAST:event_btnGravarActionPerformed
  
+    private void inserir() {
+        if (JogoDAO.inserir(jogo)) {
+            JOptionPane.showMessageDialog(this, "Jogo inserido com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao inserir jogo!");
+        }
+    }
+    
+    private void alterar() {
+        if (JogoDAO.alterar(jogo)) {
+            JOptionPane.showMessageDialog(this, "Jogo alterado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Erro ao alterar jogo!");
+        }
+    }
     /**
      * @param args the command line arguments
      */
