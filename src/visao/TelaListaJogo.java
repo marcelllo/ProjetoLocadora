@@ -58,6 +58,11 @@ public class TelaListaJogo extends javax.swing.JFrame {
         });
 
         btnExcluir.setText("Excluir");
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
 
         tabJogos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -126,6 +131,27 @@ public class TelaListaJogo extends javax.swing.JFrame {
             cadastro.setVisible(true);
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+         int linha = tabJogos.getSelectedRow();
+        if (linha == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione um jogo para excluir!");
+        } else {
+            Jogo jogo = listaJogos.get(linha);
+            String mensagem = "Deseja realmente excluir o jogo " + jogo.getTitulo() + "?";
+            int opcao = JOptionPane.showConfirmDialog(this, mensagem, "Confirme a exclusão", 
+                    JOptionPane.YES_NO_OPTION);
+            
+            if (opcao == JOptionPane.YES_OPTION) {
+                if (JogoDAO.excluir(jogo.getId())) {
+                    listarJogos(); // atualizar a lista de jogos
+                    JOptionPane.showMessageDialog(this, "Jogo excluído com sucesso!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Erro ao excluir o jogo!");
+                }
+            }
+        }
+    }//GEN-LAST:event_btnExcluirActionPerformed
 
     public void listarJogos() {
         listaJogos = JogoDAO.listar();
