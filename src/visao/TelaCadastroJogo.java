@@ -8,6 +8,7 @@ package visao;
 import entidades.Categoria;
 import entidades.Jogo;
 import javax.swing.JOptionPane;
+import persistencia.CategoriaDAO;
 import persistencia.JogoDAO;
 
 /**
@@ -26,13 +27,16 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         initComponents();
         this.jogo = new Jogo(new Categoria());
         this.telaLista = telaLista;
+        for (Categoria c : CategoriaDAO.listarPorTipo('J')) {
+            cmbCategoria.addItem(c);
+        }
     }
     
     public void setJogo(Jogo jogo) {
         this.jogo = jogo;
         txtTitulo.setText(jogo.getTitulo());
         txtDescricao.setText(jogo.getDescricao());
-        txtCategoria.setText(jogo.getCategoria().getNome());
+        cmbCategoria.setSelectedItem(jogo.getCategoria());
         txtTipo.setText(jogo.getTipo());
         txtPreco.setText(String.valueOf(jogo.getPreco()));
         txtMemoria.setText(String.valueOf(jogo.getMemoria()));
@@ -53,7 +57,6 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         txtDescricao = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        txtCategoria = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtPreco = new javax.swing.JTextField();
@@ -65,6 +68,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         txtTipo = new javax.swing.JTextField();
         btnGravar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
+        cmbCategoria = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -119,7 +123,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
                                             .addComponent(txtPreco, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel4)))
                                     .addComponent(jLabel3)
-                                    .addComponent(txtCategoria))
+                                    .addComponent(cmbCategoria, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel7)
@@ -138,7 +142,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(txtTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -151,9 +155,9 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtTipo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -187,7 +191,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
         jogo.setMemoria(Integer.parseInt(txtMemoria.getText()));
         jogo.setPreco(Double.parseDouble(txtPreco.getText()));
         jogo.setNumeroDias(Integer.parseInt(txtNumeroDias.getText()));
-        jogo.getCategoria().setNome(txtCategoria.getText());
+        jogo.setCategoria((Categoria)cmbCategoria.getSelectedItem());
         
         if (jogo.getId() == 0) {
             inserir();
@@ -218,6 +222,7 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnGravar;
+    private javax.swing.JComboBox<Categoria> cmbCategoria;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -227,7 +232,6 @@ public class TelaCadastroJogo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField txtCategoria;
     private javax.swing.JTextArea txtDescricao;
     private javax.swing.JTextField txtMemoria;
     private javax.swing.JTextField txtNumeroDias;

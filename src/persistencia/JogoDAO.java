@@ -14,13 +14,13 @@ public class JogoDAO {
         try {
             Connection conexao = Conexao.getConexao();
             String sql = "INSERT INTO jogo (titulo, descricao, preco, numeroDias, "
-                    + "categoria, memoria, tipo) VALUES (?,?,?,?,?,?,?)";
+                    + "categoria_id, memoria, tipo) VALUES (?,?,?,?,?,?,?)";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, jogo.getTitulo());
             ps.setString(2, jogo.getDescricao());
             ps.setDouble(3, jogo.getPreco());
             ps.setInt(4, jogo.getNumeroDias());
-            ps.setString(5, jogo.getCategoria().getNome());
+            ps.setInt(5, jogo.getCategoria().getId());
             ps.setInt(6, jogo.getMemoria());
             ps.setString(7, String.valueOf(jogo.getTipo()));
             int resultado = ps.executeUpdate();
@@ -37,14 +37,14 @@ public class JogoDAO {
             Connection conexao = Conexao.getConexao();
             String sql = "UPDATE jogo SET "
                     + "titulo=?, descricao=?, preco=?, numeroDias=?, "
-                    + "categoria=?, memoria=?, tipo=? "
+                    + "categoria_id=?, memoria=?, tipo=? "
                     + "WHERE id=?";
             PreparedStatement ps = conexao.prepareStatement(sql);
             ps.setString(1, jogo.getTitulo());
             ps.setString(2, jogo.getDescricao());
             ps.setDouble(3, jogo.getPreco());
             ps.setInt(4, jogo.getNumeroDias());
-            ps.setString(5, jogo.getCategoria().getNome());
+            ps.setInt(5, jogo.getCategoria().getId());
             ps.setInt(6, jogo.getMemoria());
             ps.setString(7, String.valueOf(jogo.getTipo()));
             ps.setInt(8, jogo.getId());

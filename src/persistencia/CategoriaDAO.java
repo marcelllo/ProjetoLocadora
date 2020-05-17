@@ -24,7 +24,7 @@ public class CategoriaDAO {
         }
     }
 	
-	public static boolean alterar(Categoria categoria) {
+    public static boolean alterar(Categoria categoria) {
         try {
             Connection con = Conexao.getConexao();
             String sql = "UPDATE categoria SET "
@@ -46,7 +46,7 @@ public class CategoriaDAO {
         }
     }
 	
-	public static boolean excluir(int id) {
+    public static boolean excluir(int id) {
         try {
             Connection con = Conexao.getConexao();
             String sql = "DELETE FROM categoria WHERE id = ?";
@@ -73,6 +73,30 @@ public class CategoriaDAO {
                 c.setId(resultado.getInt("id"));
                 c.setNome(resultado.getString("nome"));
                 c.setTipo(resultado.getString("tipo").charAt(0));
+                categorias.add(c);
+            }
+            resultado.close();
+            comando.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return categorias;
+    }
+    
+    public static ArrayList<Categoria> listarPorTipo(char tipo) {
+        ArrayList<Categoria> categorias = new ArrayList<Categoria>();
+        try {
+            Connection conexao = Conexao.getConexao();
+            String sql = "SELECT * FROM categoria WHERE tipo = ?";
+            PreparedStatement comando = conexao.prepareStatement(sql);
+            comando.setString(1, String.valueOf(tipo));
+            ResultSet resultado = comando.executeQuery();
+            while(resultado.next()) {
+                Categoria c = new Categoria();
+                c.setId(resultado.getInt("id"));
+                c.setNome(resultado.getString("nome"));
+                // c.setTipo(resultado.getString("tipo").charAt(0));
+                c.setTipo(tipo);
                 categorias.add(c);
             }
             resultado.close();
