@@ -23,4 +23,20 @@ public class Filme extends Item {
     public void setDuracao(int duracao) {
         this.duracao = duracao;
     }
+
+    @Override
+    public String toString() {
+        return "Filme \n" + 
+                "   ID: " + getId() + "\n" +
+                "   Diretor: " + diretor + "\n" +
+                "   Duração: " + duracao + "\n" +
+                "   Título: " + getTitulo() + "\n" +
+                "   Descrição: " + getDescricao() + "\n" +
+                "   Preço: " + getPreco() + "\n" +
+                "   Nº Dias: " + getNumeroDias() + "\n" +
+                "   Categoria: " + getCategoria() + "\n" +
+                '}';
+    }
+    
+    
 }
