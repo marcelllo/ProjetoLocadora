@@ -8,6 +8,7 @@ package persistencia;
 import entidades.Categoria;
 import entidades.Filme;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -46,10 +47,39 @@ public class FilmeDAO {
                 
                 lista.add(filme);
             }
+            
+            rs.close();
+            st.close();
         } catch (Exception e) {
             System.out.println("FilmeDAO.listar");
             System.out.println(e.getMessage());
         }
         return lista;
+    }
+
+    public static boolean inserir(Filme filme) {
+        try {
+            String sql = "INSERT INTO filme (titulo, descricao, preco, "
+                    + "numeroDias, diretor, duracao, categoria_id) VALUES "
+                    + "(?,?,?,?,?,?,?)";
+            Connection con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, filme.getTitulo());
+            ps.setString(2, filme.getDescricao());
+            ps.setDouble(3, filme.getPreco());
+            ps.setInt(4, filme.getNumeroDias());
+            ps.setString(5, filme.getDiretor());
+            ps.setInt(6, filme.getDuracao());
+            ps.setInt(7, filme.getCategoria().getId());
+            
+            int inseridos = ps.executeUpdate();
+            
+            ps.close();
+            
+            return inseridos > 0;
+        } catch (Exception e) {
+            System.out.println("FilmeDAO.inserir: " + e.getMessage());
+            return false;
+        }
     }
 }
