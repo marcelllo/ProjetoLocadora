@@ -82,4 +82,49 @@ public class FilmeDAO {
             return false;
         }
     }
+    
+    public static boolean alterar(Filme filme) {
+        try {
+            String sql = "UPDATE filme SET titulo=?, descricao=?, preco=?, "
+                    + "numeroDias=?, diretor=?, duracao=?, categoria_id=? "
+                    + "WHERE id = ?";
+            Connection con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, filme.getTitulo());
+            ps.setString(2, filme.getDescricao());
+            ps.setDouble(3, filme.getPreco());
+            ps.setInt(4, filme.getNumeroDias());
+            ps.setString(5, filme.getDiretor());
+            ps.setInt(6, filme.getDuracao());
+            ps.setInt(7, filme.getCategoria().getId());
+            ps.setInt(8, filme.getId());
+            
+            int alterados = ps.executeUpdate();
+            
+            ps.close();
+            
+            return alterados > 0;
+        } catch (Exception e) {
+            System.out.println("FilmeDAO.alterar: " + e.getMessage());
+            return false;
+        }
+    }
+    
+    public static boolean excluir(int id) {
+        try {
+            String sql = "DELETE FROM filme WHERE id = ?";
+            Connection con = Conexao.getConexao();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, id);
+            
+            int excluidos = ps.executeUpdate();
+            
+            ps.close();
+            
+            return excluidos > 0;
+        } catch (Exception e) {
+            System.out.println("FilmeDAO.excluir: " + e.getMessage());
+            return false;
+        }
+    }
 }

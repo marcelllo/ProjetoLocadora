@@ -24,14 +24,28 @@ public class TesteFilme {
         filme.setDuracao(90);
         filme.setPreco(2.5);
         filme.setNumeroDias(5);
-        filme.setDiretor("Teste filmeDAO");
+        filme.setDiretor("Diretor BAD");
         filme.setDescricao("Filme policial");
         
+        /*
         if (FilmeDAO.inserir(filme)) {
             JOptionPane.showMessageDialog(null, "Filme inserido com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao inserir filme.");
+        }*/
+        /*
+        filme.setId(5);
+        if (FilmeDAO.alterar(filme)) {
+            JOptionPane.showMessageDialog(null, "Filme alterar com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao alterar filme.");
+        }*/
+        if (FilmeDAO.excluir(5)) {
+            JOptionPane.showMessageDialog(null, "Filme excluir com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao excluir filme.");
         }
+        
         
         System.out.println(FilmeDAO.listar());
     }
