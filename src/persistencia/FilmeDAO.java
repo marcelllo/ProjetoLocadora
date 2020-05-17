@@ -46,9 +46,6 @@ public class FilmeDAO {
                 
                 lista.add(filme);
             }
-            
-            rs.close();
-            st.close();
         } catch (Exception e) {
             System.out.println("FilmeDAO.listar");
             System.out.println(e.getMessage());
