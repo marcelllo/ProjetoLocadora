@@ -117,20 +117,18 @@ public class TelaListaFilme extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoActionPerformed
-        // new TelaCadastroJogo(this).setVisible(true);
+        new TelaCadastroFilme(this).setVisible(true);
     }//GEN-LAST:event_btnNovoActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         int linha = tabFilmes.getSelectedRow();
         if (linha == -1) {
-            JOptionPane.showMessageDialog(this, "Selecione um jogo para alterar!");
+            JOptionPane.showMessageDialog(this, "Selecione um filme para alterar!");
         } else {
-            /*
-            TelaCadastroJogo cadastro = new TelaCadastroJogo(this);
-            // Pega o jogo selecionado e envia para a tela de cadastro
-            cadastro.setJogo(listaJogos.get(linha)); 
+            TelaCadastroFilme cadastro = new TelaCadastroFilme(this);
+            // Pega o filme selecionado e envia para a tela de cadastro
+            cadastro.setFilme(listaFilmes.get(linha)); 
             cadastro.setVisible(true);
-            */
         }
     }//GEN-LAST:event_btnAlterarActionPerformed
 
